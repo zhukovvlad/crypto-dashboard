@@ -1,8 +1,9 @@
 import { Container, Grid, Box, Button } from "@mui/material";
 import React from "react";
-//  import { signInWithGoogle } from "../firebase/firebase.utils";
+import { signWithGoogle } from "../../firebase/firebase.utils";
 
 const Login = () => {
+
   return (
     <Container>
       <Grid
@@ -22,7 +23,7 @@ const Login = () => {
           direction={"column"}
         >
           <Box p={5}>
-            <Button variant={"outlined"}>
+            <Button variant={"outlined"} color="secondary" onClick={signWithGoogle}>
               Login with Google
             </Button>
           </Box>
