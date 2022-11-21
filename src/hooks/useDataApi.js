@@ -3,11 +3,12 @@ import axios from "axios";
 
 /**
  * @description hook for fetching data from url
- * @param {*} initialUrl 
- * @param {*} initialData 
- * @returns {Array}
+ * @param {string} initialUrl 
+ * @param {object} initialData
+ * @param {function} fetchMethod
+ * @returns {array}
  */
-export const useDataApi = (initialUrl, initialData) => {
+export const useDataApi = (initialUrl, initialData, fetchMethod=axios) => {
   const [data, setData] = useState(initialData);
   const [url, setUrl] = useState(initialUrl);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,13 +20,13 @@ export const useDataApi = (initialUrl, initialData) => {
       setIsLoading(true);
 
       try {
-        const result = await axios(url);
+        const result = await fetchMethod(url);
         setData(result.data);
       } catch (error) {
         setIsError(true);
       }
 
-      setIsLoading(true);
+      setIsLoading(false);
     };
 
     fetchData();
