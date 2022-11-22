@@ -22,7 +22,7 @@ export const useDataApi = (initialUrl, initialData, fetchMethod=axios) => {
       try {
         const result = await fetchMethod(url);
         setData(result.data);
-        console.log("Result is ", result)
+        console.log("Result is ", result.data)
       } catch (error) {
         setIsError(true);
         console.log("Error while fetchinf is", error.message)

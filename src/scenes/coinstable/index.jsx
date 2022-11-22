@@ -45,7 +45,7 @@ const CoinsTable = () => {
       ) : (
         <Fragment>
           <AddCoin data={data} setData={setData} />
-          <CoinsDataTable />
+          <CoinsDataTable dataArray={data} />
         </Fragment>
       )}
     </Box>
