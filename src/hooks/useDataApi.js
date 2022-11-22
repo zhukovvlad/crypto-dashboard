@@ -22,14 +22,17 @@ export const useDataApi = (initialUrl, initialData, fetchMethod=axios) => {
       try {
         const result = await fetchMethod(url);
         setData(result.data);
+        console.log("Result is ", result)
       } catch (error) {
         setIsError(true);
+        console.log("Error while fetchinf is", error.message)
       }
 
       setIsLoading(false);
     };
 
     fetchData();
+  // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [url]);
 
   return [{ data, isLoading, isError }, setUrl];
