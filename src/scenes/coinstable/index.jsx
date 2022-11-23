@@ -47,7 +47,7 @@ const CoinsTable = () => {
           <AddCoin data={data} setData={setData} />
           <CoinsDataTable dataArray={data} />
         </Fragment>
-      )}
+        )}
     </Box>
   );
 };

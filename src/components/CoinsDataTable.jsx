@@ -4,6 +4,7 @@ import { DataGrid } from "@mui/x-data-grid";
 import axios from "axios";
 
 import { CoinsData } from "../utils/apis";
+import DeleteCoin from "./DeleteCoin";
 import { tokens } from "../theme";
 
 const CoinsDataTable = ({ dataArray }) => {
@@ -15,47 +16,61 @@ const CoinsDataTable = ({ dataArray }) => {
 
   const columns = [
     { field: "id", headerName: "ID" },
-    { field: "name", headerName: "Name", flex: 1 },
     {
-        field: "symbol",
-        headerName: "Symbol",
-        flex: 1,
-        renderCell: (params) => (
-            <Typography>
-                {params.row.symbol.toUpperCase()}
-            </Typography>
-        )
+      field: "name",
+      headerName: "Name",
+      flex: 1,
+      cellClassName: "name-column--cell",
     },
     {
-        field: "current_price",
-        headerName: "Price",
-        flex: 1,
-        renderCell: (params) => (
-            <Typography color={colors.greenAccent[500]}>
-                ${params.row.current_price.toLocaleString("en-US")}
-            </Typography>
-        ),
+      field: "symbol",
+      headerName: "Symbol",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography>{params.row.symbol.toUpperCase()}</Typography>
+      ),
     },
     {
-        field: "ath",
-        headerName: "ATH",
-        flex: 1,
-        renderCell: (params) => (
-            <Typography color={colors.greenAccent[500]}>
-                ${params.row.ath.toLocaleString("en-US")}
-            </Typography>
-        ),
+      field: "current_price",
+      headerName: "Price",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[500]}>
+          ${params.row.current_price.toLocaleString("en-US")}
+        </Typography>
+      ),
     },
     {
-        field: "ath_change_percentage",
-        headerName: "ATH Change",
-        flex: 1,
-        renderCell: (params) => (
-            <Typography color={colors.greenAccent[500]}>
-                {params.row.ath_change_percentage.toFixed(2)}%
-            </Typography>
-        ),
-    }
+      field: "ath",
+      headerName: "ATH",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[500]}>
+          ${params.row.ath.toLocaleString("en-US")}
+        </Typography>
+      ),
+    },
+    {
+      field: "ath_change_percentage",
+      headerName: "ATH Change",
+      flex: 1,
+      renderCell: (params) => (
+        <Typography color={colors.greenAccent[500]}>
+          {params.row.ath_change_percentage.toFixed(2)}%
+        </Typography>
+      ),
+    },
+    {
+      field: "delete",
+      headerName: "Delete Coin",
+      renderCell: (params) => (
+        <DeleteCoin
+          coinForDelete={params.row.id}
+          setData={setData}
+          data={data}
+        />
+      ),
+    },
   ];
 
   useEffect(() => {
@@ -66,6 +81,7 @@ const CoinsDataTable = ({ dataArray }) => {
       .join();
 
     const initialUrl = CoinsData(queryString);
+    if (!queryString) return;
 
     const fetchData = async () => {
       setIsError(false);
@@ -90,13 +106,6 @@ const CoinsDataTable = ({ dataArray }) => {
       {isLoading ? (
         <div>Loading table</div>
       ) : (
-        // <div>
-        //   {data?.map((row) => (
-        //     <div key={row.id}>
-        //       {row.name} - {row.symbol}
-        //     </div>
-        //   ))}
-        // </div>
         <Box
           m="40px 0 0 0"
           height="70vh"
@@ -126,7 +135,7 @@ const CoinsDataTable = ({ dataArray }) => {
             },
           }}
         >
-          <DataGrid checkboxSelection rows={data} columns={columns} />
+          <DataGrid rows={data} columns={columns} />
         </Box>
       )}
     </Box>

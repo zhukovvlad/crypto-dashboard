@@ -19,7 +19,7 @@ function AddCoin({ data, setData }) {
         if (coin === data[index].id) {
           console.log(`We already have ${coin} in databse`);
           setQuery("");
-          return;
+          throw new Error(`${coin} is already in database`);
         }
       }
     }
