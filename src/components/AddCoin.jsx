@@ -48,6 +48,7 @@ function AddCoin({ data, setData }) {
     } catch (error) {
       setIsError(true);
     }
+    setIsLoading(false);
   };
 
   return (
@@ -66,6 +67,7 @@ function AddCoin({ data, setData }) {
         <button type="submit">Submit</button>
       </form>
       {isError && <div>We've got an error</div>}
+      {isLoading && <div>It's ok. Just Loading</div>}
     </Fragment>
   );
 }
