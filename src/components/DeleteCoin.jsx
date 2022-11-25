@@ -5,7 +5,7 @@ import { db, auth } from "../firebase/firebase.utils";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { query, where } from "firebase/firestore";
 
-function DeleteCoin({ coinForDelete, setData, data }) {
+function DeleteCoin({ coinForDelete, setData, data, dataArray, setDataArray }) {
   const [user] = useAuthState(auth);
   const coinsRef = collection(db, "coins");
   const q = query(
@@ -19,10 +19,14 @@ function DeleteCoin({ coinForDelete, setData, data }) {
     console.log(formDoc.docs[0].id);
     await deleteDoc(doc(db, "coins", formDoc.docs[0].id));
     const changedRowData = data.filter(
-        (coinData) => coinData.id !== coinForDelete
-      );
-      console.log("Changed rowData ", changedRowData);
-      setData(changedRowData);
+      (coinData) => coinData.id !== coinForDelete
+    );
+    const changedDataArray = dataArray.filter(
+      (coinData) => coinData.id !== coinForDelete
+    )
+    console.log("Changed rowData ", changedRowData);
+    setData(changedRowData);
+    setDataArray(changedDataArray);
     // console.log("All data ", data);
     // console.log("We will delete ", coinForDelete);
   };

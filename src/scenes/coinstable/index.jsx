@@ -38,14 +38,14 @@ const CoinsTable = () => {
 
   return (
     <Box m="20px">
-      <Header title="Coin Table" subtitle="Table with all user's coins" />
+      <Header title="Coin's Watchlist" subtitle="Table with all user's coins" />
       {isError && <div>Something went wrong...</div>}
       {isLoading ? (
         <div>Loading</div>
       ) : (
         <Fragment>
           <AddCoin data={data} setData={setData} />
-          <CoinsDataTable dataArray={data} />
+          <CoinsDataTable dataArray={data} setDataArray={setData} />
         </Fragment>
         )}
     </Box>

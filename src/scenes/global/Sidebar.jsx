@@ -127,7 +127,7 @@ const Sidebar = ({ user }) => {
               Data
             </Typography>
             <Item
-              title="Coins Table"
+              title="Watchlist"
               to="/coinstable"
               icon={<TableRowsOutlinedIcon />}
               selected={selected}

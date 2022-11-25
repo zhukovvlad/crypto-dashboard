@@ -7,7 +7,7 @@ import { CoinsData } from "../utils/apis";
 import DeleteCoin from "./DeleteCoin";
 import { tokens } from "../theme";
 
-const CoinsDataTable = ({ dataArray }) => {
+const CoinsDataTable = ({ dataArray, setDataArray }) => {
   const theme = useTheme();
   const colors = tokens(theme.palette.mode);
   const [data, setData] = useState([]);
@@ -68,6 +68,8 @@ const CoinsDataTable = ({ dataArray }) => {
           coinForDelete={params.row.id}
           setData={setData}
           data={data}
+          dataArray={dataArray}
+          setDataArray={setDataArray}
         />
       ),
     },
@@ -88,7 +90,7 @@ const CoinsDataTable = ({ dataArray }) => {
       setIsLoading(true);
 
       try {
-        const result = await axios.get(CoinsData(initialUrl));
+        const result = await axios.get(initialUrl);
         setData(result.data);
       } catch (error) {
         setIsError(true);
