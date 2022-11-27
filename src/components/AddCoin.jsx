@@ -92,14 +92,6 @@ function AddCoin({ data, setData }) {
             onChange={(e) => setQuery(e.target.value)}
             sx={{ gridColumn: "span 3" }}
           />
-          <Button
-            type="submit"
-            sx={{ gridColumn: "span 2" }}
-            variant="contained"
-            color="secondary"
-          >
-            Submit
-          </Button>
         </Box>
       </Box>
       {isError && <ErrorAddCoin status={true} errorStatus={errorMessage} />}
