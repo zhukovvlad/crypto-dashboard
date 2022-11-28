@@ -6,7 +6,8 @@ import { Link } from "react-router-dom";
 import { tokens } from "../../theme";
 import HomeOutlinedIcon from "@mui/icons-material/HomeOutlined";
 import MenuOutlinedIcon from "@mui/icons-material/MenuOutlined";
-import TableRowsOutlinedIcon from '@mui/icons-material/TableRowsOutlined';
+import TableRowsOutlinedIcon from "@mui/icons-material/TableRowsOutlined";
+import SsidChartOutlinedIcon from "@mui/icons-material/SsidChartOutlined";
 
 const Item = ({ title, to, icon, selected, setSelected }) => {
   const theme = useTheme();
@@ -112,7 +113,7 @@ const Sidebar = ({ user }) => {
             </Box>
           )}
           <Box paddingLeft={isCollapsed ? undefined : "10%"}>
-          <Item
+            <Item
               title="Dashboard"
               to="/"
               icon={<HomeOutlinedIcon />}
@@ -130,6 +131,13 @@ const Sidebar = ({ user }) => {
               title="Watchlist"
               to="/coinstable"
               icon={<TableRowsOutlinedIcon />}
+              selected={selected}
+              setSelected={setSelected}
+            />
+            <Item
+              title="Correlation"
+              to="/correlation"
+              icon={<SsidChartOutlinedIcon />}
               selected={selected}
               setSelected={setSelected}
             />
