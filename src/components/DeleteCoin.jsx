@@ -5,7 +5,14 @@ import { db, auth } from "../firebase/firebase.utils";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { query, where } from "firebase/firestore";
 
-function DeleteCoin({ coinForDelete, setData, data, dataArray, setDataArray }) {
+function DeleteCoin({
+  coinForDelete,
+  setData,
+  data,
+  dataArray,
+  setDataArray,
+  onDelete,
+}) {
   const [user] = useAuthState(auth);
   const coinsRef = collection(db, "coins");
   const q = query(
@@ -23,7 +30,7 @@ function DeleteCoin({ coinForDelete, setData, data, dataArray, setDataArray }) {
     );
     const changedDataArray = dataArray.filter(
       (coinData) => coinData.id !== coinForDelete
-    )
+    );
     console.log("Changed rowData ", changedRowData);
     setData(changedRowData);
     setDataArray(changedDataArray);
@@ -31,8 +38,12 @@ function DeleteCoin({ coinForDelete, setData, data, dataArray, setDataArray }) {
     // console.log("We will delete ", coinForDelete);
   };
 
+  const handleClick = () => {
+    onDelete(coinForDelete);
+  };
+
   return (
-    <Button variant="contained" color="secondary" onClick={handleDelete}>
+    <Button variant="contained" color="secondary" onClick={handleClick}>
       <Typography>Delete Coin</Typography>
     </Button>
   );
