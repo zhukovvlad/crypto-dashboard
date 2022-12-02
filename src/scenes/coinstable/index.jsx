@@ -14,34 +14,40 @@ import {
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Fragment, useState, useEffect } from "react";
 
+import CoinsContext from "../../components/context/coins";
+import { useContext } from "react";
+
 const CoinsTable = () => {
   const [user] = useAuthState(auth);
   const coinsRef = collection(db, "coins");
-  const q = query(coinsRef, where("user", "==", user.uid));
+  // const q = query(coinsRef, where("user", "==", user.uid));
   const [data, setData] = useState([]);
-  const [isError, setIsError] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  // const [isError, setIsError] = useState(false);
+  // const [isLoading, setIsLoading] = useState(false);
+
+  const {coins, fetchCoins, isError, isLoading } = useContext(CoinsContext);
 
   useEffect(() => {
-    const fetchedData = async () => {
-      setIsError(false);
-      setIsLoading(true);
+    //const fetchedData = async () => {
+    //  setIsError(false);
+    //  setIsLoading(true);
+//
+    //  try {
+    //    const result = await getDocs(q);
+    //    result.forEach((doc) => {
+    //      setData((data) => [...data, doc.data()]);
+    //    });
+    //    console.log(data);
+    //  } catch (error) {
+    //    setIsError(true);
+    //  }
+    //  setIsLoading(false);
+    //};
+//
+    //fetchedData();
+    fetchCoins()
 
-      try {
-        const result = await getDocs(q);
-        result.forEach((doc) => {
-          setData((data) => [...data, doc.data()]);
-        });
-        console.log(data);
-      } catch (error) {
-        setIsError(true);
-      }
-      setIsLoading(false);
-    };
-
-    fetchedData();
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [fetchCoins]);
 
   /**
    * Function for delete coin from database
@@ -68,6 +74,7 @@ const CoinsTable = () => {
         <div>Loading</div>
       ) : (
         <Fragment>
+          {coins.length}
           <AddCoin data={data} setData={setData} />
           <CoinsDataTable
             dataArray={data}

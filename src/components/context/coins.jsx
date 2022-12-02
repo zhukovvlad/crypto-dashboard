@@ -15,13 +15,14 @@ const CoinsContext = createContext();
 
 function Provider({ children }) {
   const [user] = useAuthState(auth);
-  const coinsRef = collection(db, "coins");
-  const q = query(coinsRef, where("user", "==", user.uid));
   const [coins, setCoins] = useState([]);
   const [isError, setIsError] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
-  const fetchCoins = async () => {
+  const fetchCoins = useCallback(async () => {
+    const coinsRef = collection(db, "coins");
+    const q = query(coinsRef, where("user", "==", user.uid));
+
     setIsError(false);
     setIsLoading(true);
 
@@ -30,22 +31,24 @@ function Provider({ children }) {
       result.forEach((doc) => {
         setCoins((data) => [...data, doc.data()]);
       });
-      console.log(coins);
     } catch (error) {
       setIsError(true);
     }
     setIsLoading(false);
-  };
+  }, [user]);
 
   const valueToShare = {
+    coins,
     fetchCoins,
+    isError,
+    isLoading
   };
 
   return (
     <CoinsContext.Provider value={valueToShare}>
-        {children}
+      {children}
     </CoinsContext.Provider>
-  )
+  );
 }
 
 export { Provider };
