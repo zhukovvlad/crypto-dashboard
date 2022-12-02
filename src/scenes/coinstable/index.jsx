@@ -3,7 +3,14 @@ import Header from "../../components/Header";
 import AddCoin from "../../components/AddCoin";
 import CoinsDataTable from "../../components/CoinsDataTable";
 import { auth, db } from "../../firebase/firebase.utils";
-import { collection, getDocs, deleteDoc, doc, query, where } from "firebase/firestore";
+import {
+  collection,
+  getDocs,
+  deleteDoc,
+  doc,
+  query,
+  where,
+} from "firebase/firestore";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Fragment, useState, useEffect } from "react";
 
@@ -38,7 +45,7 @@ const CoinsTable = () => {
 
   /**
    * Function for delete coin from database
-   * @param {number} coinId 
+   * @param {number} coinId
    */
   const DeleteCoinById = async (coinId) => {
     const queryForDelete = query(
@@ -49,11 +56,9 @@ const CoinsTable = () => {
 
     const formDoc = await getDocs(queryForDelete);
     await deleteDoc(doc(db, "coins", formDoc.docs[0].id));
-    const changeData = data.filter(
-      (coinData) => coinData.id !== coinId
-    );
+    const changeData = data.filter((coinData) => coinData.id !== coinId);
     setData(changeData);
-  }
+  };
 
   return (
     <Box m="20px">
@@ -64,9 +69,13 @@ const CoinsTable = () => {
       ) : (
         <Fragment>
           <AddCoin data={data} setData={setData} />
-          <CoinsDataTable dataArray={data} setDataArray={setData} onDelete={DeleteCoinById} />
+          <CoinsDataTable
+            dataArray={data}
+            setDataArray={setData}
+            onDelete={DeleteCoinById}
+          />
         </Fragment>
-        )}
+      )}
     </Box>
   );
 };
